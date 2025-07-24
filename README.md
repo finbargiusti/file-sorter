@@ -7,6 +7,8 @@ I created it to sort through an immense gallery of images taken from a Google Ph
 ## Game plan:
 
 1. Use svelte to make a simple front-end app.
+   a. Add options to choose directories
+   b. Add hook to upgrade to socket.io connection on /ws
 1. Provide a server that will connect with websockets.
 1. Use this project to manage messaging: https://socket.io/
 1. Use raw HTML to display images.
