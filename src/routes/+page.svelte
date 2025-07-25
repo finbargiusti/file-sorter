@@ -1,24 +1,34 @@
 <script lang="ts">
+  import { enhance } from "$app/forms";
   import type { Options } from "$lib/options";
-import type { PageProps } from "./$types";
+  import type { PageProps } from "./$types";
 
   const { data }: { data: Options } = $props();
 
-  let settingsOpen = $state(false)
+  let settingsOpen = $state(false);
 
-  let folderList = $derived(data.targetFolders.join(','));
-  const deriveFolders = () => {
-    data.targetFolders = folderList.split(',').map(folder => folder.trim());
-  }
+  let folderList: string = $derived(data.targetFolders.join(","));
+
 </script>
 
-<button onclick={() => settingsOpen = !settingsOpen} >
-  { settingsOpen ? 'Close Settings' : 'Open Settings' }
+<button onclick={() => (settingsOpen = !settingsOpen)}>
+  {settingsOpen ? "Close Settings" : "Open Settings"}
 </button>
 
 {#if settingsOpen}
-  <div class="settings">
-    <input type="text" bind:value={data.sourceFolder} placeholder="Source Folder" />
-    <input type="text" bind:value={folderList} oninput={deriveFolders} placeholder="Source Folder" />
-  </div>
+  <form method="POST" class="settings" use:enhance>
+    <input
+      name="sourceFolder"
+      type="text"
+      bind:value={data.sourceFolder}
+      placeholder="Source Folder"
+    />
+    <input
+      name="targetFolders"
+      type="text"
+      bind:value={folderList}
+      placeholder="Source Folder"
+    />
+    <button type="submit"> Save </button>
+  </form>
 {/if}
